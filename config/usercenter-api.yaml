@@ -1,0 +1,13 @@
+Name: go-template-web
+Host: 0.0.0.0
+Port: 8888
+Mode: dev #dev
+Log:
+  ServiceName: go-template-web
+  Mode: file
+  Path: ./logs
+  Level: severe
+  Compress: true
+  KeepDays: 7
+Mysql:
+  DataSource: 127.0.0.1
