@@ -6,4 +6,6 @@ type Request struct {
 
 type Response struct {
 	Message string `json:"message"`
+	ID      int64  `json:"id"`
+	Name    string `json:"name"`
 }

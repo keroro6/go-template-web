@@ -9,6 +9,11 @@ type SrvContext struct {
 }
 
 func NewSrvContext(c config2.Config) *SrvContext {
+	//sqlx.NewMysql()
+	//初始化mysql
+	//if c.Mysql.DataSource != "" {
+	//	sqlx.NewMysql(c.Mysql.DataSource)
+	//}
 	return &SrvContext{
 		Config: c,
 	}
