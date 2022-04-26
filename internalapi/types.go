@@ -1,4 +1,4 @@
-package types
+package internalapi
 
 type Request struct {
 	Name string `path:"name,options=you|me"`

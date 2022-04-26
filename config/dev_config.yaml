@@ -1,0 +1,16 @@
+Name: game
+Host: 0.0.0.0
+Port: 8888
+Mode: dev #
+Log:
+  ServiceName: game
+  Mode: file
+  Path: ./logs
+  Level: info # info error severe
+  Compress: true
+  KeepDays: 7
+MongoDB:
+  - DBName: game_control_api
+    Dsn: "mongodb://admin:123456@127.0.0.1:27017/?minPoolSize=20&maxIdleTimeMS=30000"
+
+Secret: "tuz!TI+@ThZd!K5"

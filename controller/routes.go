@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/zeromicro/go-zero/rest/httpx"
+
 	"go-template-web/service"
 	"net/http"
 
@@ -11,11 +12,6 @@ import (
 func RegisterHandlers(server *rest.Server, serverCtx *service.SrvContext) {
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/from/:name",
-				Handler: GoTemplateWebHandler(serverCtx),
-			},
 			{
 				Method:  http.MethodGet,
 				Path:    "/health",

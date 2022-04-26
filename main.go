@@ -7,25 +7,42 @@ import (
 	"github.com/zeromicro/go-zero/rest"
 	config2 "go-template-web/config"
 	"go-template-web/controller"
-	"go-template-web/model/mongoDao"
+	"go-template-web/controller/modelcontroller"
+	"go-template-web/dao/mongoDao"
+	"go-template-web/middleware"
 	"go-template-web/service"
 	"log"
 	"net/http"
 	"net/http/pprof"
 )
 
-var configFile = flag.String("f", "config/go-template-web-api.yaml", "the config file")
+var env = flag.String("e", "prod", "env")
+
+const (
+	EnvProd = "prod"
+	EnvDev  = "dev"
+)
 
 func main() {
 	flag.Parse()
 
 	var c config2.Config
-	conf.MustLoad(*configFile, &c)
+
+	configFile := "config/prod_config.yaml"
+	if *env == EnvDev {
+		configFile = "config/dev_config.yaml"
+	}
+	conf.MustLoad(configFile, &c)
 	ctx := service.NewSrvContext(c)
 	initJob(c)
-	server := rest.MustNewServer(c.RestConf)
+	//跨域
+	server := rest.MustNewServer(c.RestConf, rest.WithCors())
 	defer server.Stop()
+	server.Use(middleware.TraceLog)
 	controller.RegisterHandlers(server, ctx)
+	//model路由
+	modelcontroller.RegisterHandlers(server, ctx)
+	//...
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
 	closeJob(c)
